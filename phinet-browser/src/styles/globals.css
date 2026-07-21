@@ -1,0 +1,296 @@
+:root{
+  --bg:#0e1116; --panel:#161b22; --panel2:#1c232d; --line:#252d38;
+  --text:#e6edf3; --dim:#8b949e; --accent:#7c5cff; --accent2:#2ea043;
+  --in:#222c38; --out:#3a2f6b;
+}
+*{box-sizing:border-box}
+html,body,#root{margin:0;height:100%;background:var(--bg);color:var(--text);
+  font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+button{font:inherit}
+.app{display:grid;grid-template-columns:300px 1fr;height:100vh}
+.side{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column;min-width:0}
+.me{padding:14px 16px;border-bottom:1px solid var(--line)}
+.me .name{font-weight:600}
+.me .id{color:var(--dim);font-size:12px;word-break:break-all;margin-top:2px}
+.newbtn{margin:10px 12px;padding:9px;border:0;border-radius:8px;cursor:pointer;background:var(--accent);color:#fff;font-weight:600}
+.newbtn:hover{filter:brightness(1.1)}
+.threads{overflow:auto;flex:1}
+.thread{padding:11px 16px;border-bottom:1px solid var(--line);cursor:pointer;display:flex;gap:10px;align-items:center}
+.thread:hover,.thread.active{background:var(--panel2)}
+.avatar{width:36px;height:36px;border-radius:50%;flex:0 0 36px;display:grid;place-items:center;font-weight:700;color:#fff}
+.tname{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tsub{color:var(--dim);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.main{display:flex;flex-direction:column;min-width:0}
+.topbar{padding:14px 18px;border-bottom:1px solid var(--line);background:var(--panel);display:flex;align-items:center;gap:10px}
+.msgs{flex:1;overflow:auto;padding:18px;display:flex;flex-direction:column;gap:8px}
+.bubble{max-width:min(560px,72%);padding:8px 12px;border-radius:14px;word-wrap:break-word;white-space:pre-wrap}
+.bubble.in{align-self:flex-start;background:var(--in);border-bottom-left-radius:4px}
+.bubble.out{align-self:flex-end;background:var(--out);border-bottom-right-radius:4px}
+.bubble .t{display:block;color:var(--dim);font-size:11px;margin-top:3px}
+.composer{border-top:1px solid var(--line);background:var(--panel);padding:12px;display:flex;gap:10px}
+.composer input{flex:1;background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:11px 14px;outline:none}
+.composer input:focus{border-color:var(--accent)}
+.composer button{border:0;border-radius:10px;background:var(--accent2);color:#fff;font-weight:600;padding:0 18px;cursor:pointer}
+.empty{flex:1;display:grid;place-items:center;color:var(--dim);text-align:center}
+.status{padding:8px 16px;color:var(--dim);font-size:12px;border-top:1px solid var(--line)}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:6px}
+.dot.ok{background:var(--accent2)} .dot.bad{background:#d1242f}
+.modal{position:fixed;inset:0;background:#0009;display:grid;place-items:center;z-index:10}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;width:min(440px,92vw);max-height:70vh;display:flex;flex-direction:column}
+.card h3{margin:0;padding:16px 18px;border-bottom:1px solid var(--line)}
+.plist{overflow:auto}
+.pitem{padding:12px 18px;border-bottom:1px solid var(--line);cursor:pointer;display:flex;gap:10px;align-items:center}
+.pitem:hover{background:var(--panel2)}
+.pid{color:var(--dim);font-size:12px;word-break:break-all}
+.foot{padding:12px 18px;color:var(--dim);font-size:12px}
+
+/* ============================================================
+   Shell — icon rail hosting Com / Browser / Vault
+   ============================================================ */
+.shell{display:grid;grid-template-columns:76px 1fr;height:100vh}
+.rail{background:#0b0f16;border-right:1px solid var(--line);display:flex;flex-direction:column;
+  align-items:center;padding:14px 0;gap:6px}
+.rail-brand{font-size:26px;font-weight:800;color:var(--accent);margin-bottom:12px}
+.phi{background:linear-gradient(120deg,#7c5cff,#2de1c2);-webkit-background-clip:text;
+  background-clip:text;color:transparent}
+.rail-btn{width:60px;padding:10px 0;border:0;background:transparent;color:var(--dim);cursor:pointer;
+  border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:4px;transition:.15s}
+.rail-btn:hover{background:var(--panel);color:var(--text)}
+.rail-btn.active{background:var(--panel2);color:var(--text)}
+.rail-btn.active .rail-ic{filter:drop-shadow(0 0 8px rgba(124,92,255,.6))}
+.rail-ic{font-size:20px}
+.rail-lbl{font-size:10.5px;font-weight:600}
+.feature{min-width:0;overflow:hidden}
+/* com fills the feature area */
+.feature .app{height:100vh}
+
+.iconbtn{background:var(--panel2);border:1px solid var(--line);color:var(--text);cursor:pointer;
+  width:36px;height:36px;border-radius:9px;font-size:16px;display:grid;place-items:center}
+.iconbtn:hover{border-color:var(--accent)}
+.newbtn.wide{width:100%;margin:12px 0 0;padding:11px}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--panel2);
+  border:1px solid var(--line);padding:10px 18px;border-radius:10px;z-index:60}
+.spinner{width:26px;height:26px;border:3px solid var(--line);border-top-color:var(--accent);
+  border-radius:50%;animation:spin .8s linear infinite;margin:24px auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ============================================================
+   Browser
+   ============================================================ */
+.browser{height:100vh;display:flex;flex-direction:column;background:var(--bg)}
+.bhome{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;padding:24px}
+.butil{position:absolute;top:16px;right:20px}
+.blogo{font-size:64px;font-weight:800;letter-spacing:-.03em}
+.blogo .phi{font-weight:900}
+.btag{color:var(--dim);font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin-top:2px}
+.bsearch{margin-top:34px;width:min(620px,90%);display:flex;align-items:center;gap:12px;
+  background:var(--panel);border:1px solid var(--line);border-radius:30px;padding:6px 20px;
+  box-shadow:0 12px 40px rgba(0,0,0,.4)}
+.bsearch:focus-within{border-color:var(--accent)}
+.bmag{color:var(--dim);font-size:20px}
+.bsearch input{flex:1;background:transparent;border:0;outline:0;color:var(--text);padding:12px 0;font-size:16px}
+.bchips{margin-top:16px;display:flex;gap:10px}
+.bchips button{background:var(--panel);border:1px solid var(--line);color:var(--dim);
+  padding:7px 14px;border-radius:999px;cursor:pointer}
+.bchips button:hover{color:var(--text);border-color:var(--accent)}
+.baddr{display:flex;gap:8px;align-items:center;padding:8px;border-bottom:1px solid var(--line);background:var(--panel)}
+.baddr input{flex:1;background:var(--bg);border:1px solid var(--line);border-radius:20px;
+  padding:9px 16px;color:var(--text);outline:0}
+.baddr input:focus{border-color:var(--accent)}
+.bview{flex:1;position:relative;background:#fff}
+.bframe{width:100%;height:100%;border:0}
+.bcenter{position:absolute;inset:0;display:grid;place-items:center;background:var(--bg)}
+.berr{color:#f0a4bd;background:rgba(255,77,141,.08);border:1px solid #40263a;border-radius:12px;
+  padding:16px 20px;max-width:70%;text-align:center}
+
+/* circuit panel */
+.circuit{margin:14px 0}
+.hop{display:flex;align-items:center;gap:12px;padding:5px 0}
+.hopdot{width:12px;height:12px;border-radius:50%;background:linear-gradient(120deg,#7c5cff,#2de1c2)}
+.hopdot.you{background:linear-gradient(120deg,#ff4d8d,#7c5cff)}
+.hoplabel{font-weight:600}
+.hopsub{color:var(--dim);font-size:12px;font-family:ui-monospace,Menlo,monospace}
+.conn{display:block;width:2px;height:14px;background:var(--line);margin-left:5px}
+.relaylist{margin-top:12px}
+.rl-head{color:var(--dim);font-size:11px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
+.rl-item{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;color:var(--text)}
+
+/* ============================================================
+   Vault
+   ============================================================ */
+.vault{height:100vh;display:flex;flex-direction:column}
+.vault-gate{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:12px;padding:32px;text-align:center;max-width:520px;margin:0 auto}
+.vg-lock{font-size:44px}
+.vault-gate input{width:min(380px,90%);background:var(--bg);border:1px solid var(--line);border-radius:10px;
+  padding:12px 14px;color:var(--text);outline:0;margin-top:6px}
+.vault-gate input:focus{border-color:var(--accent)}
+.vault-gate .newbtn{width:min(380px,90%)}
+.vault-top{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;
+  border-bottom:1px solid var(--line);background:var(--panel)}
+.vname{font-weight:700;font-size:16px}
+.vactions{display:flex;gap:8px;align-items:center}
+.vlist{overflow:auto;flex:1;padding:14px;display:flex;flex-direction:column;gap:10px}
+.vcard{display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--line);
+  border-radius:14px;padding:14px 16px}
+.vcard:hover{border-color:var(--line)}
+.vic{font-size:22px}
+.vmeta{flex:1;min-width:0}
+.vtitle{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vsub{color:var(--dim);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.seg{display:flex;gap:6px;margin:10px 0}
+.seg button{flex:1;background:var(--bg);border:1px solid var(--line);color:var(--dim);padding:9px;
+  border-radius:9px;cursor:pointer}
+.seg button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.card input{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:9px;
+  padding:10px 12px;color:var(--text);outline:0;margin-top:8px}
+.card input:focus{border-color:var(--accent)}
+
+/* ── modal polish + invite list ─────────────────────────────── */
+.modal{backdrop-filter:blur(3px);background:rgba(4,6,12,.55)}
+.card{box-shadow:0 24px 70px rgba(0,0,0,.55);border:1px solid var(--line)}
+.card h3{margin:0 0 4px}
+.invite-list{display:flex;flex-direction:column;gap:8px;margin-top:12px;max-height:320px;overflow:auto}
+.invite-row{display:flex;justify-content:space-between;align-items:center;gap:12px;
+  background:var(--bg);border:1px solid var(--line);border-radius:11px;padding:12px 14px;
+  cursor:pointer;color:var(--text);text-align:left;transition:.15s}
+.invite-row:hover{border-color:var(--accent);background:var(--panel)}
+.ir-host{font-weight:600}
+.ir-id{color:var(--dim);font-family:ui-monospace,Menlo,monospace;font-size:12px}
+
+/* clearnet web-window note (clearnet opens in a real webview window) */
+.bweb-note{max-width:440px;text-align:center;padding:28px 26px;border-radius:16px;
+  background:var(--surface,#151a24);border:1px solid var(--line,#232a38)}
+.bweb-url{font-family:ui-monospace,Menlo,monospace;font-size:14px;color:var(--aqua,#5fe3d0);
+  word-break:break-all;margin-bottom:6px}
+.bweb-sub{font-size:15px;color:var(--text,#e8edf5);margin-bottom:14px}
+.bweb-warn{font-size:13px;line-height:1.5;color:var(--muted,#94a1b8);margin-bottom:16px}
+.bweb-again{padding:9px 16px;border-radius:10px;border:1px solid var(--line,#232a38);
+  background:transparent;color:var(--text,#e8edf5);cursor:pointer;font-size:14px}
+.bweb-again:hover{background:var(--line,#232a38)}
+
+/* ── circuit modal: keep content inside the card ──────────────────────
+   The card is a flex column with a max-height; without clipping and an
+   internal scroll area its children spill past the rounded border (and
+   long node ids push the box wider than the viewport). */
+.card{overflow:hidden}
+.card .circuit{overflow-y:auto;padding:4px 18px 8px;min-height:0;flex:1}
+.card .foot{padding:10px 18px 6px}
+.card .newbtn.wide{margin:10px 18px 16px;flex:0 0 auto}
+.hop{min-width:0}
+.hop > div{min-width:0;flex:1}
+.hopid{word-break:break-all;overflow-wrap:anywhere}
+
+/* ── network badge: which network am I actually on? ───────────────────── */
+.netbadge{flex:0 0 auto;font-size:11px;font-weight:700;letter-spacing:.04em;
+  padding:4px 9px;border-radius:99px;white-space:nowrap;text-transform:uppercase}
+.netbadge.onion{background:rgba(95,227,208,.12);border:1px solid rgba(95,227,208,.35);color:#5fe3d0}
+.netbadge.clear{background:rgba(240,180,90,.12);border:1px solid rgba(240,180,90,.35);color:#f0b45a}
+
+/* ── loading stage ───────────────────────────────────────────────────── */
+.bload{display:flex;flex-direction:column;align-items:center;gap:14px;max-width:340px;text-align:center}
+.bload-stage{font-size:13px;color:var(--dim);line-height:1.5}
+
+/* ── bookmarks ───────────────────────────────────────────────────────── */
+.bmarks{margin-top:26px;width:min(560px,92vw);text-align:left}
+.bmarks-head{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+.bmark{display:flex;align-items:stretch;gap:6px;margin-bottom:6px}
+.bmark-go{flex:1;display:flex;flex-direction:column;gap:2px;text-align:left;padding:9px 12px;
+  background:var(--panel);border:1px solid var(--line);border-radius:10px;cursor:pointer;min-width:0}
+.bmark-go:hover{border-color:var(--accent)}
+.bmark-title{font-size:13px;color:var(--fg);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bmark-id{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--dim);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bmark-x{width:34px;background:transparent;border:1px solid var(--line);border-radius:10px;
+  color:var(--dim);cursor:pointer;font-size:16px}
+.bmark-x:hover{color:#fff;border-color:var(--line)}
+
+/* nav + bookmark buttons */
+.iconbtn:disabled{opacity:.32;cursor:default}
+.iconbtn.on{color:#f5c451}
+
+/* ── modal cards: keep every popup's content inside the box ───────────
+   Only `h3` carried padding, so paragraphs, inputs and lists in the com
+   dialogs ran to the card's edge and long ids pushed past it. Applies to
+   every .card (com + browser), so popups stay consistent. */
+.card > *:not(h3):not(.plist):not(.circuit){margin-left:18px;margin-right:18px}
+.card > input{width:calc(100% - 36px);box-sizing:border-box}
+.card > .foot{margin-left:0;margin-right:0}          /* .foot pads itself */
+.card > .newbtn.wide{margin-left:18px;margin-right:18px}
+.card .plist{min-height:0;overflow-y:auto}
+.card .pitem{word-break:break-word}
+.card .pid{overflow-wrap:anywhere}
+/* Long single-token content (node ids, addresses) must wrap, not stretch. */
+.card p, .card div, .card span{overflow-wrap:anywhere}
+
+/* ── vault viewer ────────────────────────────────────────────────────── */
+.vview{padding:4px 18px 12px;overflow:auto;min-height:0;flex:1;display:flex;
+  flex-direction:column;gap:10px}
+.vtext{margin:0;white-space:pre-wrap;word-break:break-word;font-family:ui-monospace,Menlo,monospace;
+  font-size:12.5px;line-height:1.6;color:var(--fg);background:var(--bg);
+  border:1px solid var(--line);border-radius:10px;padding:12px;max-height:52vh;overflow:auto}
+.vimg{max-width:100%;max-height:52vh;object-fit:contain;border-radius:10px;
+  border:1px solid var(--line);background:var(--bg)}
+.vsecret{font-family:ui-monospace,Menlo,monospace;font-size:14px;color:var(--fg);
+  background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px;
+  word-break:break-all}
+.vlink{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;color:var(--accent);
+  word-break:break-all}
+
+/* ── shared vault items / files in com ───────────────────────────────── */
+.vshare{display:flex;flex-direction:column;gap:6px;min-width:180px}
+.vshare-head{font-size:13px;font-weight:600;color:var(--fg);word-break:break-word}
+.vshare-body{font-size:12px;color:var(--dim);word-break:break-all;line-height:1.5}
+.vshare-btn{align-self:flex-start;margin-top:4px;padding:5px 10px;font-size:12px;
+  background:var(--accent);border:none;border-radius:8px;color:#08131b;
+  font-weight:600;cursor:pointer}
+.vshare-btn:hover{filter:brightness(1.1)}
+
+/* ── chat must scroll, not grow ──────────────────────────────────────
+   A flex/grid child's min-height is `auto`, which means "at least as tall
+   as my content" — so `.msgs{flex:1;overflow:auto}` never actually
+   scrolled: it grew with every message, pushing the composer off the
+   bottom of the window. min-height:0 lets it shrink so overflow engages. */
+.app{overflow:hidden}
+.main{min-height:0}
+.msgs{min-height:0}
+.side{min-height:0}
+.threads{min-height:0}
+.vlist{min-height:0;overflow-y:auto}
+
+/* ── vault viewer: media ─────────────────────────────────────────────── */
+.card.wide{max-width:min(900px,92vw);width:min(900px,92vw)}
+.vmedia{width:100%;max-height:62vh;border-radius:10px;background:#000;
+  border:1px solid var(--line)}
+.vpdf{width:100%;height:62vh;border:1px solid var(--line);border-radius:10px;
+  background:var(--bg)}
+
+/* ── chat scrolling, the last two pieces ─────────────────────────────
+   1. Flex children default to flex-shrink:1, so a full .msgs column
+      *squashes the bubbles* rather than overflowing — the text gets
+      clipped inside compressed bubbles instead of the list scrolling.
+      Messages must keep their natural height and let the list scroll.
+   2. .app's single grid row is implicit `auto`, which sizes to content
+      and can grow past the 100vh container; minmax(0,1fr) pins it to the
+      viewport and lets it shrink below its content so scrolling engages. */
+.app{grid-template-rows:minmax(0,1fr)}
+.msgs > *{flex:0 0 auto}
+.threads > *{flex:0 0 auto}
+.vlist > *{flex:0 0 auto}
+
+/* ── popup cards: stop the chrome being squashed ─────────────────────
+   .card is a flex column with a max-height. Flex children default to
+   flex-shrink:1, so when the content is tall the *header and buttons*
+   get compressed instead of the middle scrolling — the button ends up a
+   few pixels tall and clipped. Only the scrolling region should flex;
+   everything else keeps its natural height. (Same bug as the chat
+   bubbles: in a flex column, "overflow" and "squash" look alike until
+   you say which children may shrink.) */
+.card > h3        { flex: 0 0 auto; }
+.card > .newbtn   { flex: 0 0 auto; }
+.card > .foot     { flex: 0 0 auto; }
+.card > .row      { flex: 0 0 auto; }
+.card > .composer { flex: 0 0 auto; }
+/* …and the scrollable middles must be allowed to shrink, or they push
+   the card past its max-height and take the buttons off-screen. */
+.vview, .card .plist, .card .circuit { min-height: 0; }

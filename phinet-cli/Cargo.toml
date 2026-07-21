@@ -1,0 +1,21 @@
+[package]
+name        = "phinet-cli"
+description = "phi — ΦNET hidden service CLI"
+version.workspace    = true
+edition.workspace    = true
+authors.workspace    = true
+license.workspace    = true
+
+[[bin]]
+name = "phi"
+path = "src/main.rs"
+
+[dependencies]
+phinet-core  = { path = "../phinet-core" }
+tokio        = { workspace = true, features = ["full"] }
+serde.workspace      = true
+serde_json.workspace = true
+anyhow.workspace     = true
+dirs.workspace       = true
+hex.workspace        = true
+rand.workspace       = true

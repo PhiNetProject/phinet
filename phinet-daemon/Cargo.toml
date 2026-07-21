@@ -1,0 +1,25 @@
+[package]
+name        = "phinet-daemon"
+description = "ΦNET network daemon — runs the overlay node and serves hidden services"
+version.workspace    = true
+edition.workspace    = true
+authors.workspace    = true
+license.workspace    = true
+
+[[bin]]
+name = "phinet-daemon"
+path = "src/main.rs"
+
+[dependencies]
+phinet-core  = { path = "../phinet-core" }
+tokio.workspace    = true
+serde.workspace    = true
+serde_json.workspace = true
+tracing.workspace  = true
+tracing-subscriber.workspace = true
+anyhow.workspace   = true
+dirs.workspace     = true
+hex.workspace      = true
+rand.workspace     = true
+ed25519-dalek.workspace = true
+tokio-util.workspace = true

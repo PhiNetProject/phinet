@@ -1,0 +1,37 @@
+[package]
+name        = "phinet-browser"
+description = "com — ΦNET end-to-end encrypted messenger (Tauri + React)"
+version     = "0.1.0"
+edition     = "2021"
+authors     = ["PHINET Contributors"]
+license     = "MIT"
+
+# Empty [workspace] stops Cargo scanning up to the parent workspace;
+# Tauri builds this crate independently.
+[workspace]
+
+[[bin]]
+name = "phinet-browser"
+path = "src/main.rs"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri              = { version = "2", features = [] }
+tauri-plugin-shell = "2"
+tauri-plugin-dialog = "2"
+tauri-plugin-fs     = "2"
+chacha20poly1305   = "0.10"
+argon2             = "0.5"
+rand               = "0.8"
+hex                = "0.4"
+base64             = "0.22"
+uuid               = { version = "1", features = ["v4"] }
+dirs               = "5"
+tokio              = { version = "1", features = ["full"] }
+serde              = { version = "1", features = ["derive"] }
+serde_json         = "1"
+url                = "2"
+tracing            = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }

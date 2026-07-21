@@ -1,0 +1,45 @@
+{
+  "productName": "PhiNet Browser",
+  "version": "0.1.0",
+  "identifier": "network.phinet.com",
+  "build": {
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:1420",
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build"
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/icon_32x32.png",
+      "icons/icon_128x128.png",
+      "icons/icon_256x256.png",
+      "icons/icon.png"
+    ],
+    "externalBin": [
+      "binaries/phinet-daemon"
+    ]
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "\u03a6NET",
+        "width": 1180,
+        "height": 820,
+        "minWidth": 720,
+        "minHeight": 520,
+        "resizable": true,
+        "center": true
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: vault: http://vault.localhost https:; media-src 'self' blob: vault: http://vault.localhost; object-src vault: http://vault.localhost; frame-src https: http: data: vault: http://vault.localhost; connect-src 'self' vault: http://vault.localhost http://127.0.0.1:* http://localhost:* ws://localhost:*"
+    }
+  },
+  "plugins": {
+    "shell": {
+      "open": true
+    }
+  }
+}

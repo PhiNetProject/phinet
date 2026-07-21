@@ -1,0 +1,92 @@
+name: release
+
+# Tag a version to cut a release:  git tag v0.1.0 && git push --tags
+#
+# Builds the Tor-Browser-style bundle (browser + daemon + `phi` site tool +
+# relay helper) on each OS and attaches them to the release. The Tauri app
+# can't be cross-compiled, so each platform builds natively on its own runner.
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+jobs:
+  bundle:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            name: linux
+          - os: windows-latest
+            name: windows
+          - os: macos-latest
+            name: macos
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # Tauri's Linux build needs the system webview + its dev headers.
+      - name: Linux build dependencies
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libgtk-3-dev \
+            libayatana-appindicator3-dev librsvg2-dev patchelf
+
+      - name: Cache cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ matrix.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Build bundle
+        shell: bash
+        run: ./release/build-bundle.sh
+
+      - name: Checksums
+        shell: bash
+        run: cd dist && sha256sum phinet-bundle-* > SHA256SUMS-${{ matrix.name }}.txt
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bundle-${{ matrix.name }}
+          path: |
+            dist/phinet-bundle-*
+            dist/SHA256SUMS-*
+
+  publish:
+    needs: bundle
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          body: |
+            Each bundle contains the ΦNET browser, the node daemon, the `phi`
+            site tool, and one-command helpers to run a relay or publish a
+            `.phinet` site.
+
+            Prefer to build it yourself:
+
+                git clone https://github.com/${{ github.repository }}
+                cd phinet-main && ./release/build-bundle.sh
+
+            ΦNET's anonymity depends on independent relay operators. The protocol
+            works; the privacy it buys you is a function of how many unrelated
+            people run relays. If you can, run one.

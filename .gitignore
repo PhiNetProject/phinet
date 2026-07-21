@@ -1,0 +1,51 @@
+# ── Rust ─────────────────────────────────────────────────────────────
+/target/
+**/target/
+*.pdb
+
+# ── Node / Tauri frontend ────────────────────────────────────────────
+node_modules/
+dist/
+.vite/
+*.tsbuildinfo
+
+# The daemon binary is copied here by sync-sidecar.sh at build time.
+phinet-browser/src-tauri/binaries/
+
+# ── Release bundles ──────────────────────────────────────────────────
+/dist/
+*.tar.gz
+*.zip
+*.AppImage
+*.deb
+*.dmg
+*.msi
+
+# ── SECRETS — never commit ───────────────────────────────────────────
+# identity.json
+# Which guards this client uses — reveals who it talks through.
+guard_sample.json
+# An authority's committed-but-unrevealed random value. Reading it early
+# is exactly the advantage commit-and-reveal denies everyone.
+srv_pending.json holds this node's private x25519 static key; hs_identity_*
+# files are hidden-service private keys (whoever has one can impersonate
+# the site). The whole ~/.phinet store is per-machine state, not source.
+.phinet/
+identity.json
+# Which guards this client uses — reveals who it talks through.
+guard_sample.json
+# An authority's committed-but-unrevealed random value. Reading it early
+# is exactly the advantage commit-and-reveal denies everyone.
+srv_pending.json
+hs_identity_*.json
+*.key
+*.pem
+
+# ── Local / editor ───────────────────────────────────────────────────
+*.log
+nohup.out
+.DS_Store
+.idea/
+.vscode/
+*.swp
+local.properties

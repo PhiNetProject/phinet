@@ -1,0 +1,46 @@
+[package]
+name        = "phinet-core"
+description = "ΦNET core: certificates, crypto, onion routing, DHT, hidden services"
+version.workspace    = true
+edition.workspace    = true
+authors.workspace    = true
+license.workspace    = true
+
+[dependencies]
+tokio.workspace      = true
+tokio-util.workspace = true
+x25519-dalek.workspace  = true
+ed25519-dalek.workspace = true
+curve25519-dalek.workspace = true
+bitflags.workspace      = true
+chacha20poly1305.workspace = true
+chacha20.workspace         = true
+sha2.workspace       = true
+blake2.workspace     = true
+hkdf.workspace       = true
+hmac.workspace       = true
+subtle.workspace     = true
+rand.workspace       = true
+rand_core.workspace  = true
+zeroize.workspace    = true
+ml-kem.workspace     = true
+hybrid-array.workspace = true
+serde.workspace      = true
+serde_json.workspace = true
+bytes.workspace      = true
+num-bigint.workspace = true
+num-traits.workspace = true
+num-integer.workspace = true
+num-prime.workspace  = true
+argon2.workspace     = true
+hex.workspace        = true
+tracing.workspace    = true
+thiserror.workspace  = true
+anyhow.workspace     = true
+chrono.workspace     = true
+dirs.workspace       = true
+
+[dev-dependencies]
+tokio = { version = "1", features = ["full", "test-util"] }
+tempfile = "=3.10.1"
+tracing-subscriber.workspace = true
